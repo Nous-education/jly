@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ma Valentine 💖</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9ecf, #ff6fa5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+.card {
+    background: rgba(255,255,255,0.15);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    margin: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#yes {
+    background-color: white;
+    color: #ff4f8b;
+}
+
+#no {
+    background-color: #ff4f8b;
+    color: white;
+    position: absolute;
+}
+
+.hidden {
+    display: none;
+}
+
+.option {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+    background-color: white;
+    color: #ff4f8b;
+}
+
+.heart {
+    position: fixed;
+    font-size: 20px;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10vh); opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div id="step1">
+        <h1>Veux-tu être ma Valentine ? 💕</h1>
+        <button id="yes">Oui 💖</button>
+        <button id="no">Non 😢</button>
+    </div>
+
+    <div id="step2" class="hidden">
+        <h1>Quelle fonction nous represente le plus ? 😏</h1>
+         <button class="option" onclick="choose('exp')">e^x mouais </button>
+        <button class="option" onclick="choose('sin')">x=16sin3(t)
+                                                        y=13cos(t)−5cos(2t)−2cos(3t)−cos(4t) (AH PEUT ETRE) —  💫</button>
+       
+        <button class="option" onclick="choose('heart')"> f(x) = 0 pas cool </button>
+    </div>
+
+    <div id="result" class="hidden"></div>
+</div>
+
+<script>
+const noButton = document.getElementById("no");
+const yesButton = document.getElementById("yes");
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+const result = document.getElementById("result");
+
+let yesSize = 16;
+
+// Bouton NON fuit + OUI grossit
+function moveButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noButton.style.left = x + "px";
+    noButton.style.top = y + "px";
+
+    yesSize += 5;
+    yesButton.style.fontSize = yesSize + "px";
+}
+
+noButton.addEventListener("touchstart", moveButton);
+noButton.addEventListener("mouseover", moveButton);
+
+yesButton.addEventListener("click", () => {
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
+    createHearts();
+});
+
+// Résultat personnalisé
+function choose(type) {
+    step2.classList.add("hidden");
+    result.classList.remove("hidden");
+
+    if(type === "sin") {
+        result.innerHTML = " copie-colle la fonction sur internet et va dans images: x=16sin3(t) y=13cos(t)−5cos(2t)−2cos(3t)−cos(4t)";
+    }
+    if(type === "exp") {
+        result.innerHTML = "exp c'est une fonction très forte mais qui bouge pas quand tu la dérive mais avec amibe boom boom ça bouge";
+    }
+    if(type === "heart") {
+        result.innerHTML = "gros neuil je te largue (ah bah non heinnnn, pas encore le jour de la saint valentin)  ";
+    }
+}
+
+// Pluie de cœurs
+function createHearts() {
+    for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 3000);
+    }
+}
+</script>
+
+</body>
+</html>
